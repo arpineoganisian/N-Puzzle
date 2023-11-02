@@ -3,6 +3,7 @@ JAVA = java
 SRC_DIR = srcs/main/java
 OUT_DIR = out
 MAIN_CLASS = Main
+FILE = srcs/main/resources/npuzzle-3-1.txt
 
 # Правило для сборки
 all: build run
@@ -14,7 +15,7 @@ build:
 
 # Правило для запуска
 run:
-	$(JAVA) -cp $(OUT_DIR) $(MAIN_CLASS) $(ARGS)
+	$(JAVA) -cp $(OUT_DIR) $(MAIN_CLASS) $(FILE)
 
 # Правило для очистки
 clean:
