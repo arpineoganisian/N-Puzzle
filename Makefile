@@ -1,9 +1,10 @@
 JAVAC = javac
 JAVA = java
+#-Xmx1024m
 SRC_DIR = srcs/main/java
 OUT_DIR = out
 MAIN_CLASS = Main
-FILE = srcs/main/resources/npuzzle-3-1.txt
+FILE = srcs/main/resources/valid_boards/simple_3.txt
 
 # Правило для сборки
 all: build run
