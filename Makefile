@@ -1,10 +1,8 @@
 JAVAC = javac
-JAVA = java
-#-Xmx1024m
+JAVA = java -Xmx2g
 SRC_DIR = srcs/main/java
 OUT_DIR = out
 MAIN_CLASS = Main
-FILE = srcs/main/resources/valid_boards/simple_3.txt
 
 # Правило для сборки
 all: build run

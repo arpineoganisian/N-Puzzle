@@ -78,7 +78,6 @@ public class Board {
 
     // is this board the goal board?
     public boolean isGoal() {
-        System.out.println();
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (tiles[i][j] == 0)
