@@ -1,3 +1,4 @@
+NAME				= npuzzle
 JAVAC 				= javac
 JAVA 				= java
 SRC_DIR 			= srcs/main/java
@@ -6,10 +7,9 @@ MAIN_CLASS 			= Main
 GENERATOR_SCRIPT	= npuzzle-gen.py
 GENERATOR_OUTPUT	= generated_input.txt
 SIZE 				= 3
-FLAGS 				=
+FLAGS 				= -i 3
 
-# Правило для сборки
-all: build run
+all: build
 
 # Правило для компиляции
 build:
@@ -39,4 +39,4 @@ re: clean all
 re-puzzle: clean puzzle
 
 # Указание правил, которые не являются файлами
-.PHONY: all build run clean
+.PHONY: all clean fclean re
