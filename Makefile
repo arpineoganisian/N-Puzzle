@@ -21,7 +21,7 @@ run:
 	$(JAVA) -cp $(OUT_DIR) $(MAIN_CLASS) $(FILE)
 
 # Правило для запуска c генерацией ввода
-puzzle: generate
+puzzle: build generate
 	$(JAVA) -cp $(OUT_DIR) $(MAIN_CLASS) $(GENERATOR_OUTPUT)
 
 # Правило для генерации ввода
