@@ -6,7 +6,7 @@ MAIN_CLASS 			= Main
 GENERATOR_SCRIPT	= npuzzle-gen.py
 GENERATOR_OUTPUT	= generated_input.txt
 SIZE 				= 3
-FLAGS 				= -s
+FLAGS 				=
 
 # Правило для сборки
 all: build run
@@ -17,10 +17,11 @@ build:
 	$(JAVAC) -d $(OUT_DIR) $(SRC_DIR)/*.java
 
 # Правило для запуска
-#run:
-#	$(JAVA) -cp $(OUT_DIR) $(MAIN_CLASS) $(FILE)
+run:
+	$(JAVA) -cp $(OUT_DIR) $(MAIN_CLASS) $(FILE)
 
-run: generate
+# Правило для запуска c генерацией ввода
+puzzle: generate
 	$(JAVA) -cp $(OUT_DIR) $(MAIN_CLASS) $(GENERATOR_OUTPUT)
 
 # Правило для генерации ввода
@@ -33,6 +34,9 @@ clean:
 
 # Правило для пересборки
 re: clean all
+
+# Правило для пересборки с генерацией ввода
+re-puzzle: clean puzzle
 
 # Указание правил, которые не являются файлами
 .PHONY: all build run clean
