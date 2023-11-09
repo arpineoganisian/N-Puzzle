@@ -1,8 +1,12 @@
-JAVAC = javac
-JAVA = java -Xmx2g
-SRC_DIR = srcs/main/java
-OUT_DIR = out
-MAIN_CLASS = Main
+JAVAC 				= javac
+JAVA 				= java
+SRC_DIR 			= srcs/main/java
+OUT_DIR 			= out
+MAIN_CLASS 			= Main
+GENERATOR_SCRIPT	= npuzzle-gen.py
+GENERATOR_OUTPUT	= generated_input.txt
+SIZE 				= 3
+FLAGS 				= -s
 
 # Правило для сборки
 all: build run
@@ -13,12 +17,19 @@ build:
 	$(JAVAC) -d $(OUT_DIR) $(SRC_DIR)/*.java
 
 # Правило для запуска
-run:
-	$(JAVA) -cp $(OUT_DIR) $(MAIN_CLASS) $(FILE)
+#run:
+#	$(JAVA) -cp $(OUT_DIR) $(MAIN_CLASS) $(FILE)
+
+run: generate
+	$(JAVA) -cp $(OUT_DIR) $(MAIN_CLASS) $(GENERATOR_OUTPUT)
+
+# Правило для генерации ввода
+generate:
+	python3 $(GENERATOR_SCRIPT) $(FLAGS) $(SIZE) > $(GENERATOR_OUTPUT)
 
 # Правило для очистки
 clean:
-	rm -rf $(OUT_DIR)
+	rm -rf $(OUT_DIR) $(GENERATOR_OUTPUT)
 
 # Правило для пересборки
 re: clean all

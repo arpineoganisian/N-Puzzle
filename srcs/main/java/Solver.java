@@ -2,7 +2,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -22,43 +21,48 @@ public class Solver {
         String functionName = properties.getProperty("heuristic");
         Method method = Board.class.getMethod(functionName);
 
-        // TODO добавить проверку на нерешаемость пазла ЧЕРЕЗ TWIN BOARD!!!
         PriorityQueue<Node> pq = new PriorityQueue<>(Comparator.comparingInt(o -> o.priority));
         pq.add(new Node(initial, null, 0, (int) method.invoke(initial)));
-        while (!pq.isEmpty()) {
+
+        PriorityQueue<Node> twinPq = new PriorityQueue<>(Comparator.comparingInt(o -> o.priority));
+        twinPq.add(new Node(initial.twin(), null, 0, (int) method.invoke(initial)));
+
+        Board goal = createGoal(initial.dimension());
+
+        while (!pq.isEmpty() && !twinPq.isEmpty()) {
             Node searchNode = pq.poll();
-            System.out.println(pq.size());
-            if (!searchNode.board.isGoal()) {
+            Node twinSearchNode = twinPq.poll();
+            if (!searchNode.board.equals(goal) && !twinSearchNode.board.equals(goal)) {
+//            if (!searchNode.board.isGoal() && !twinSearchNode.board.isGoal()) {
                 for (Board b : searchNode.board.neighbors()) {
                     if (searchNode.previous == null || !b.equals(searchNode.previous.board)) {
                         Node node = new Node(b, searchNode,
-                                             searchNode.moves + 1,
-                                             searchNode.moves + 1 + (int) method.invoke(b));
+                                searchNode.moves + 1,
+                                searchNode.moves + 1 + (int) method.invoke(b));
                         pq.add(node);
                     }
                 }
-            }
-            else {
+                for (Board b : twinSearchNode.board.neighbors()) {
+                    if (twinSearchNode.previous == null || !b.equals(twinSearchNode.previous.board)) {
+                        Node node = new Node(b, twinSearchNode,
+                                twinSearchNode.moves + 1,
+                                twinSearchNode.moves + 1 + (int) method.invoke(b));
+                        twinPq.add(node);
+                    }
+                }
+            } else if (twinSearchNode.board.equals(goal)) {
+                moves = -1;
+                return;
+            } else {
                 moves = searchNode.moves;
                 solution = new Stack<>();
                 while (searchNode != null) {
                     solution.add(searchNode.board);
                     searchNode = searchNode.previous;
                 }
-                break;
+                return;
             }
         }
-        // TODO return в else и удалить это условие
-        if (solution.isEmpty()) {
-            moves = -1;
-        }
-
-    }
-
-    // is the initial board solvable? (see below)
-    public boolean isSolvable() {
-        return moves() != -1;
-        // TODO есть ли способ проверить решаемость пазла без решения его?
     }
 
     // min number of moves to solve initial board; -1 if unsolvable
@@ -71,7 +75,7 @@ public class Solver {
         return solution;
     }
 
-    private class Node {
+    private static class Node {
         Board board;
         int priority;
         int moves;
@@ -86,7 +90,26 @@ public class Solver {
         }
     }
 
-    public static void main(String[] args) {
-        //TODO написать юнит тесты
+    private Board createGoal(int n) {
+        int[][] tiles = new int[n][n];
+
+        int value = 1;
+        int row = 0, col = 0;
+        for (int count = n-1; count > 0; count -= 2, row++, col++) {
+            for (int i = 0; i < count; i++) {
+                tiles[row][col++] = value++;
+            }
+            for (int i = 0; i < count; i++) {
+                tiles[row++][col] = value++;
+            }
+            for (int i = 0; i <  count; i++) {
+                tiles[row][col--] = value++;
+            }
+            for (int i = 0; i < count; i++) {
+                if (value == n*n) break;
+                tiles[row--][col] = value++;
+            }
+        }
+        return new Board(tiles, n);
     }
 }

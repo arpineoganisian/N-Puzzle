@@ -4,12 +4,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
-import java.util.List;
 
 public class Main {
-
     public static void main(String[] args) {
-
         if (args.length != 1)
             throw new IllegalArgumentException("Wrong number of program arguments: " + args.length);
 
@@ -59,7 +56,8 @@ public class Main {
         }
 
         // TODO протестировать евклида
-        // TODO понять правильно ли работает генератор пазлов или проблема в коде
+        // TODO дописать мейкфайл
+        // TODO проверить правильно ли работет метод twin и проверка solvable - unsolvable
 
         long endTime = System.nanoTime();
         long duration = (endTime - startTime) / 1000000;
@@ -68,19 +66,24 @@ public class Main {
     }
 
     private static void printResult(Solver solver, long duration) {
-        String MAGENTA = "\u001B[35m", BLUE = "\u001B[34m", GREEN = "\u001B[32m", RESET = "\u001B[0m";
+        String MAGENTA = "\u001B[35m", BLUE = "\u001B[34m",
+                GREEN = "\u001B[32m", RESET = "\u001B[0m";
 
-        System.out.println(MAGENTA + "Minimum number of moves: " + solver.moves());
-        System.out.println();
-
-        for (int i = 0; i < solver.solution().size(); i++) {
-            if (solver.moves() == i)
-                System.out.println(BLUE + "Initial board: " + RESET);
-            else
-                System.out.println(BLUE + "Move " + (solver.moves() - i) + ": " + RESET);
-            System.out.println(solver.solution().get(i));
+        if (solver.solution() == null) {
+            System.out.println(MAGENTA + "Unsolvable puzzle" + RESET);
         }
+        else {
+            System.out.println(MAGENTA + "Minimum number of moves: " + solver.moves());
+            System.out.println();
 
+            for (int i = 0; i < solver.solution().size(); i++) {
+                if (solver.moves() == i)
+                    System.out.println(BLUE + "Initial board: " + RESET);
+                else
+                    System.out.println(BLUE + "Move " + (solver.moves() - i) + ": " + RESET);
+                System.out.println(solver.solution().get(i));
+            }
+        }
         System.out.println(GREEN + "Duration: " + duration + " ms / " + duration / 1000D + " s"  + RESET);
     }
 }

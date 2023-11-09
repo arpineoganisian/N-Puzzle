@@ -76,20 +76,6 @@ public class Board {
         return result;
     }
 
-    // is this board the goal board?
-    public boolean isGoal() {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (tiles[i][j] == 0)
-                    continue;
-                if (tiles[i][j] != (i * n) + j + 1) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     // does this board equal y?
     public boolean equals(Object y) {
         if (this == y) return true;
@@ -142,72 +128,5 @@ public class Board {
         int[][] copy = new int[n][];
         for (int i = 0; i < n; i++) copy[i] = Arrays.copyOf(tiles[i], n);
         return copy;
-    }
-
-    public static void main(String[] args) {
-        // пазл в правильном порядке
-        System.out.println("--BOARD { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 0 } }--");
-        int[][] ints1 = new int[][] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 0 } };
-        Board board1 = new Board(ints1, 3);
-        System.out.println(board1);
-        System.out.println(board1.hamming() == 0);
-        System.out.println(board1.manhattan() == 0);
-        System.out.println(board1.isGoal());
-        System.out.println();
-
-        // пазл с дыркой посередине
-        System.out.println("--BOARD { { 8, 1, 3 }, { 4, 0, 2 }, { 7, 6, 5 } }--");
-        int[][] ints2 = new int[][] { { 8, 1, 3 }, { 4, 0, 2 }, { 7, 6, 5 } };
-        Board board2 = new Board(ints2, 3);
-        System.out.println(board2);
-        System.out.println(board2.hamming() == 5);
-        System.out.println(board2.manhattan() == 10);
-        for (Board b : board2.neighbors()) {
-            System.out.println("Neighbour:");
-            System.out.println(b);
-        }
-        System.out.println(board2);
-        System.out.println(!board2.isGoal());
-        System.out.println(board2.twin().equals(new Board(
-                new int[][] { { 1, 8, 3 }, { 4, 0, 2 }, { 7, 6, 5 } },
-                3)));
-        System.out.println();
-
-        // пазл с дыркой в углу
-        System.out.println("--BOARD { { 0, 1, 3 }, { 4, 8, 2 }, { 7, 6, 5 } }--");
-        int[][] ints3 = new int[][] { { 0, 1, 3 }, { 4, 8, 2 }, { 7, 6, 5 } };
-        Board board3 = new Board(ints3, 3);
-        System.out.println(board3);
-        for (Board b : board3.neighbors()) {
-            System.out.println("Neighbour:");
-            System.out.println(b);
-        }
-        System.out.println(board3.twin().equals(new Board(
-                new int[][] { { 0, 1, 3 }, { 8, 4, 2 }, { 7, 6, 5 } },
-                3)));
-        System.out.println(!board3.isGoal());
-        System.out.println();
-
-        // такой же, как и предыдущий
-        System.out.println("--BOARD { { 0, 1, 3 }, { 4, 8, 2 }, { 7, 6, 5 } }--");
-        int[][] ints4 = new int[][] { { 0, 1, 3 }, { 4, 8, 2 }, { 7, 6, 5 } };
-        Board board4 = new Board(ints4, 3);
-        System.out.println(board4);
-        System.out.println(board3.equals(board4));
-        System.out.println();
-
-        // неправильные equals
-        System.out.println(!board3.equals(board1));
-        System.out.println(!board3.equals(null));
-        System.out.println(!board3.equals(new StringBuilder()));
-
-        System.out.println(board1.dimension() == 3);
-        System.out.println(board2.dimension() == 3);
-        System.out.println(board3.dimension() == 3);
-        System.out.println(board4.dimension() == 3);
-
-        // баг из примера
-        Board board5 = new Board(new int[][] { { 3, 2, 6 }, { 1, 4, 5 }, { 8, 0, 7 } }, 3);
-        board5.neighbors().forEach(System.out::println);
     }
 }
