@@ -33,21 +33,22 @@ public class Solver {
             Node searchNode = pq.poll();
             Node twinSearchNode = twinPq.poll();
             if (!searchNode.board.equals(goal) && !twinSearchNode.board.equals(goal)) {
-//            if (!searchNode.board.isGoal() && !twinSearchNode.board.isGoal()) {
                 for (Board b : searchNode.board.neighbors()) {
                     if (searchNode.previous == null || !b.equals(searchNode.previous.board)) {
-                        Node node = new Node(b, searchNode,
-                                searchNode.moves + 1,
-                                searchNode.moves + 1 + (int) method.invoke(b));
-                        pq.add(node);
+                        addNewNode(pq, searchNode, b, method);
+//                        Node node = new Node(b, searchNode,
+//                                searchNode.moves + 1,
+//                                searchNode.moves + 1 + (int) method.invoke(b));
+//                        pq.add(node);
                     }
                 }
                 for (Board b : twinSearchNode.board.neighbors()) {
                     if (twinSearchNode.previous == null || !b.equals(twinSearchNode.previous.board)) {
-                        Node node = new Node(b, twinSearchNode,
-                                twinSearchNode.moves + 1,
-                                twinSearchNode.moves + 1 + (int) method.invoke(b));
-                        twinPq.add(node);
+                        addNewNode(twinPq, twinSearchNode, b, method);
+//                        Node node = new Node(b, twinSearchNode,
+//                                twinSearchNode.moves + 1,
+//                                twinSearchNode.moves + 1 + (int) method.invoke(b));
+//                        twinPq.add(node);
                     }
                 }
             } else if (twinSearchNode.board.equals(goal)) {
@@ -63,6 +64,14 @@ public class Solver {
                 return;
             }
         }
+    }
+
+    private void addNewNode(PriorityQueue<Node> pq, Node previous, Board board, Method method)
+            throws InvocationTargetException, IllegalAccessException {
+        Node node = new Node(board, previous,
+                previous.moves + 1,
+                previous.moves + 1 + (int) method.invoke(board));
+        pq.add(node);
     }
 
     // min number of moves to solve initial board; -1 if unsolvable

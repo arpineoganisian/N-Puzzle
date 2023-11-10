@@ -24,7 +24,6 @@ public class Board {
         return result.toString();
     }
 
-    //TODO удалить этот метод, пока просто для проверки Н
     public int dimension() {
         return n;
     }
@@ -85,7 +84,7 @@ public class Board {
 
     // all neighboring boards
     public Iterable<Board> neighbors() {
-        List<Board> neigbours = new ArrayList<>();
+        List<Board> neighbours = new ArrayList<>();
         int row = -1;
         int col = -1;
         for (int i = 0; i < n; i++) {
@@ -97,16 +96,12 @@ public class Board {
                 }
             }
         }
-        if (col != 0)
-            neigbours.add(createBoardWithSwap(row, col, row, col - 1, 0));
-        if (row != 0)
-            neigbours.add(createBoardWithSwap(row, col, row - 1, col, 0));
-        if (col != n - 1)
-            neigbours.add(createBoardWithSwap(row, col, row, col + 1, 0));
-        if (row != n - 1)
-            neigbours.add(createBoardWithSwap(row, col, row + 1, col, 0));
+        if (col != 0) neighbours.add(createBoardWithSwap(row, col, row, col - 1, 0));
+        if (row != 0) neighbours.add(createBoardWithSwap(row, col, row - 1, col, 0));
+        if (col != n - 1) neighbours.add(createBoardWithSwap(row, col, row, col + 1, 0));
+        if (row != n - 1) neighbours.add(createBoardWithSwap(row, col, row + 1, col, 0));
 
-        return neigbours;
+        return neighbours;
     }
 
     // a board that is obtained by exchanging any pair of tiles

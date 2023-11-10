@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
-public class Main {
+public class NPuzzle {
     public static void main(String[] args) {
         if (args.length != 1)
             throw new IllegalArgumentException("Wrong number of program arguments: " + args.length);
@@ -58,6 +58,7 @@ public class Main {
         // TODO протестировать евклида
         // TODO дописать мейкфайл
         // TODO проверить правильно ли работет метод twin и проверка solvable - unsolvable
+        // TODO
 
         long endTime = System.nanoTime();
         long duration = (endTime - startTime) / 1000000;
