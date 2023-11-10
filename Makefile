@@ -7,7 +7,7 @@ MAIN_CLASS 			= NPuzzle
 GENERATOR_SCRIPT	= npuzzle-gen.py
 GENERATOR_OUTPUT	= generated_input.txt
 SIZE 				= 3
-FLAGS 				= -i 3
+FLAGS 				= -s -i 10
 
 all: build
 

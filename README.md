@@ -3,66 +3,54 @@ _Solving the N-puzzle game using the A* search algorithm_
 
 ## To start the program
 - Build the project  
-`
-make
-`  
+`make`  
 
 
 - Run the program with a puzzle from a file  
-`
-make run FILE=[file_name]
-`  
+`make run FILE=[file_name]`  
 
 
 - Run with randomly generated 3x3 puzzle  
-`
-make puzzle
-`  
+`make puzzle`  
 
 
-- Run with generated puzzle  
-`
-make puzzle [-s] [-u] [-i ITERATIONS] size
-`  
+- Run with puzzle according to the specified parameters  
+`make puzzle FLAGS='[-s] [-u] [-i] [size]'`  
 positional arguments:  
-size — Size of the puzzle's side  
+`size` — Size of the puzzle's side  
 optional arguments:  
--s — Forces generation of a solvable puzzle  
--u — Forces generation of an unsolvable puzzle  
--i ITERATIONS — Number of passes
+`-s` — Forces generation of a solvable puzzle  
+`-u` — Forces generation of an unsolvable puzzle  
+`-i` — Number of passes
 
 
 - Delete all compiled and generated files  
-`
-make clean
-`  
+`make clean`  
 
 
 - Rebuild the project  
-`
-make re
-`  
+`make re`  
 
 
-- Rebuild the project and run with generated puzzle  
-`
-make re-puzzle
-`
+- Rebuild the project and run with randomly generated 3x3 puzzle (also possible to specify parameters as in `make puzzle`)  
+`make re-puzzle`
 
-## Heuristic functions
+## Heuristics
 To choose the heuristic function, in the file `heuristic.properties` change the value of key `heuristic` to `manhattan`, `hamming` or `euclidean`  
 
-:us:  
+:gb:
+### Manhattan distance (Taxicab, City-Block)
+### Hamming distance (Misplaced Tiles)
+### Euclidean Distance 
 
 :ru:  
-Эвристика «Количество неправильных пазлов» (Misplaced Tiles, Hamming): Эта эвристика подсчитывает количество плиток, находящихся не на своих местах в текущем состоянии пазла. Чем больше неправильных плиток, тем дальше текущее состояние от целевого.
-
-Эвристика «Манхэттенское расстояние» (Manhattan Distance, Taxicab, City-Block): Эта эвристика определяет общее смещение всех плиток от их правильных позиций по вертикали и горизонтали. Сумма этих расстояний для всех плиток дает оценку общего расстояния между текущим и целевым состоянием.
-
-Эвристика «Евклидово расстояние» (Euclidean Distance): В этой эвристике используется евклидово расстояние между текущим положением плитки и ее целевым положением в двумерном пространстве. Эта эвристика может быть менее информативной для задачи N-пазл, чем «Манхэттенское расстояние».  
-Евклидова эвристика (иногда называемая евклидовым расстоянием) - это метод оценки эвристического расстояния в алгоритме поиска пути, таком как A*. Это измеряет прямое расстояние между текущей позицией и целевой позицией в пространстве состояний.
-В контексте задачи N-пазлов (N-puzzle), Евклидова эвристика измеряет евклидово расстояние между текущим расположением плиток и целевым расположением плиток в пазле. Формально, для N-пазлов, Евклидова эвристика определяется как квадратный корень суммы квадратов разницы между координатами плиток в текущем и целевом состоянии.
-Если (x1, y1) - текущие координаты плитки, и (x2 , y2) - целевые координаты плитки, то Евклидова эвристика для каждой плитки может быть рассчитана следующим образом:
+### Манхэттенское расстояние (Manhattan distance, Taxicab, City-Block)
+Эта эвристика определяет общее смещение всех плиток от их правильных позиций по вертикали и горизонтали (то есть количество ходов от текущей до целевой позиции для каждой плитки). Сумма этих расстояний для всех плиток дает оценку общего расстояния между текущим и целевым состоянием.
+### Количество неправильных плиток (Hamming distance, Misplaced Tiles)
+Подсчитывает количество плиток, находящихся не на своих местах в текущем состоянии пазла. Чем больше неправильных плиток, тем дальше текущее состояние от целевого.
+### Евклидово расстояние (Euclidean Distance)
+В этой эвристике используется евклидово расстояние между текущим положением плитки и ее целевым положением в двумерном пространстве. Эта эвристика может быть менее информативной для задачи N-пазл, чем «Манхэттенское расстояние».  
+Евклидова эвристика для N-puzzle определяется как квадратный корень суммы квадратов разницы между координатами плиток в текущем и целевом состоянии. То есть:
 h = sqrt((x1 - x2)^2 + (y1 - y2)^2)
   
 ## Some variations of the A* algorithm

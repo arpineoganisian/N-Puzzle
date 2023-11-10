@@ -73,9 +73,6 @@ public class NPuzzle {
             System.out.println(MAGENTA + "Unsolvable puzzle" + RESET);
         }
         else {
-            System.out.println(MAGENTA + "Minimum number of moves: " + solver.moves());
-            System.out.println();
-
             for (int i = 0; i < solver.solution().size(); i++) {
                 if (solver.moves() == i)
                     System.out.println(BLUE + "Initial board: " + RESET);
@@ -83,6 +80,9 @@ public class NPuzzle {
                     System.out.println(BLUE + "Move " + (solver.moves() - i) + ": " + RESET);
                 System.out.println(solver.solution().get(i));
             }
+
+            System.out.println(MAGENTA + "Minimum number of moves: " + solver.moves());
+            System.out.println();
         }
         System.out.println(GREEN + "Duration: " + duration + " ms / " + duration / 1000D + " s"  + RESET);
     }
