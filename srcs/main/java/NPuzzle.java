@@ -56,7 +56,6 @@ public class NPuzzle {
         }
 
         // TODO протестировать евклида
-        // TODO дописать мейкфайл
         // TODO проверить правильно ли работет метод twin и проверка solvable - unsolvable
         // TODO
 

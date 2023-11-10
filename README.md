@@ -50,8 +50,11 @@ make re-puzzle
 `
 
 ## Heuristic functions
-To choose the heuristic function, change the value of key `heuristic` in the file `heuristic.properties`  
+To choose the heuristic function, in the file `heuristic.properties` change the value of key `heuristic` to `manhattan`, `hamming` or `euclidean`  
 
+:us:  
+
+:ru:  
 Эвристика «Количество неправильных пазлов» (Misplaced Tiles, Hamming): Эта эвристика подсчитывает количество плиток, находящихся не на своих местах в текущем состоянии пазла. Чем больше неправильных плиток, тем дальше текущее состояние от целевого.
 
 Эвристика «Манхэттенское расстояние» (Manhattan Distance, Taxicab, City-Block): Эта эвристика определяет общее смещение всех плиток от их правильных позиций по вертикали и горизонтали. Сумма этих расстояний для всех плиток дает оценку общего расстояния между текущим и целевым состоянием.
@@ -63,7 +66,7 @@ To choose the heuristic function, change the value of key `heuristic` in the fil
 h = sqrt((x1 - x2)^2 + (y1 - y2)^2)
   
 ## Some variations of the A* algorithm
-
+:us:  
 __A* (A-star) - A* (А-звезда)__  
 __B* (B-star) - B* (B-звезда)__  
 __D* (Dynamic A*) - D* (Динамический A*)__  
@@ -73,6 +76,8 @@ __Anytime Repairing A* - A* с постоянным улучшением__
 __Lifelong Planning A* - A* для долгосрочного планирования__  
 __A* with limited memory - A* с ограниченной памятью__  
 __Parallel A* - Параллельный A*__
+
+:ru:  
 
 https://theory.stanford.edu/~amitp/GameProgramming/Variations.html
 https://github.com/mharriso/school21-checklists/blob/master/ng_algo_n-puzzle.pdf

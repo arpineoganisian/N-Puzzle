@@ -21,11 +21,11 @@ public class Solver {
         String functionName = properties.getProperty("heuristic");
         Method method = Board.class.getMethod(functionName);
 
-        PriorityQueue<Node> pq = new PriorityQueue<>(Comparator.comparingInt(o -> o.priority));
-        pq.add(new Node(initial, null, 0, (int) method.invoke(initial)));
+        PriorityQueue<Node> pq = new PriorityQueue<>(Comparator.comparingDouble(o -> o.priority));
+        pq.add(new Node(initial, null, 0, (double) method.invoke(initial)));
 
-        PriorityQueue<Node> twinPq = new PriorityQueue<>(Comparator.comparingInt(o -> o.priority));
-        twinPq.add(new Node(initial.twin(), null, 0, (int) method.invoke(initial)));
+        PriorityQueue<Node> twinPq = new PriorityQueue<>(Comparator.comparingDouble(o -> o.priority));
+        twinPq.add(new Node(initial.twin(), null, 0, (double) method.invoke(initial)));
 
         Board goal = createGoal(initial.dimension());
 
@@ -70,7 +70,7 @@ public class Solver {
             throws InvocationTargetException, IllegalAccessException {
         Node node = new Node(board, previous,
                 previous.moves + 1,
-                previous.moves + 1 + (int) method.invoke(board));
+                previous.moves + 1 + (double) method.invoke(board));
         pq.add(node);
     }
 
@@ -86,12 +86,12 @@ public class Solver {
 
     private static class Node {
         Board board;
-        int priority;
+        double priority;
         int moves;
         Node previous;
 
         //TODO переписать priority на Double для Евклидовой эвристики
-        public Node(Board board, Node previous, int moves, int priority) {
+        public Node(Board board, Node previous, int moves, double priority) {
             this.board = board;
             this.previous = previous;
             this.moves = moves;

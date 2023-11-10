@@ -29,7 +29,7 @@ public class Board {
     }
 
     // Misplaced Tiles Heuristic: number of tiles out of place
-    public int hamming() {
+    public double hamming() {
         int result = 0;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -43,7 +43,7 @@ public class Board {
     }
 
     // Manhattan Distance Heuristic: sum of distances between tiles and goal
-    public int manhattan() {
+    public double manhattan() {
         int result = 0;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -59,7 +59,7 @@ public class Board {
     }
 
 //    Euclidean Distance Heuristic: sum of Euclidean distances between tiles and goal
-    public double euclid() {
+    public double euclidean() {
         int result = 0;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
