@@ -6,6 +6,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
 public class NPuzzle {
+    private static final String COLOR = "\u001B[34m", RESET = "\u001B[0m";
+
     public static void main(String[] args) {
         if (args.length != 1)
             throw new IllegalArgumentException("Wrong number of program arguments: " + args.length);
@@ -46,14 +48,14 @@ public class NPuzzle {
         long startTime = System.nanoTime();
 
         Board board = new Board(tiles, n);
-        Solver solver;
+        Solver solver = null;
         try {
             solver = new Solver(board);
         } catch (IOException e) {
             throw new RuntimeException("An error occurred while reading the file: heuristic.properties", e);
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new RuntimeException("An error occurred during reflection usage", e);
-        }
+        } catch (OutOfMemoryError ignored) {}
 
         long endTime = System.nanoTime();
         long duration = (endTime - startTime) / 1000000;
@@ -62,45 +64,44 @@ public class NPuzzle {
     }
 
     private static void printResult(Solver solver, long duration) {
-        String MAGENTA = "\u001B[35m", BLUE = "\u001B[34m",
-                GREEN = "\u001B[32m", COLOR = "\u001B[36m",
-                RESET = "\u001B[0m";
-
-        System.out.println(COLOR + "Total number of states ever selected in the \"opened\" set (complexity in time): "
-                + solver.complexityInTime());
-
-        System.out.println("Maximum number of states ever represented in memory at the same time (complexity in size): "
-                + solver.complexityInSize() + RESET);
-
-        if (solver.solution() == null) {
-            System.out.println(MAGENTA + "Unsolvable puzzle" + RESET);
-        }
-        else {
-            for (int i = 0; i < solver.solution().size(); i++) {
-                if (solver.moves() == i)
-                    System.out.println(BLUE + "Initial board: " + RESET);
-                else
-                    System.out.println(BLUE + "Move " + (solver.moves() - i) + ": " + RESET);
-                System.out.println(solver.solution().get(i));
+        printLine();
+        if (solver == null) {
+            System.out.println(COLOR + "This is too big... Try a smaller puzzle or one with fewer moves" + RESET);
+        } else {
+            if (solver.moves() == -1) {
+                System.out.println(COLOR + "Unsolvable puzzle" + RESET);
+            } else {
+                for (int i = 0; i < solver.solution().size(); i++) {
+                    if (solver.moves() == i) System.out.println(COLOR + "Initial board: ");
+                    else System.out.println(COLOR + "Move " + (solver.moves() - i) + ": ");
+                    System.out.println(RESET + solver.solution().get(i));
+                }
+                printLine();
+                System.out.println("Minimum number of moves: " + COLOR + solver.moves() + RESET);
             }
-
-            System.out.println(MAGENTA + "Minimum number of moves: " + solver.moves());
-            System.out.println();
         }
-        System.out.println(GREEN + "Duration: " + duration + " ms / " + duration / 1000D + " s"  + RESET);
+        printLine();
+        System.out.println("Total number of states ever selected (complexity in time): "
+                + COLOR + Solver.complexityInTime() + RESET);
+        System.out.println("Maximum number of states represented in memory ATST (complexity in size): "
+                + COLOR + Solver.complexityInSize() + RESET);
+        printLine();
+        System.out.println("Duration: " + COLOR + duration + " ms / " + duration / 1000D + " s"  + RESET);
+        printLine();
     }
 
-    //TODO В конце поиска программа должна предоставить следующие значения:
-    //◦ Общее количество состояний, когда-либо выбранных в «открытом» наборе (сложность во времени)
-    //◦ Максимальное количество состояний, когда-либо представленных в памяти одновременно во время поиска (сложность по размеру)
-    //◦ Количество ходов, необходимое для перехода из начального состояния в конечное по данным поиска.
-    //◦ Упорядоченная последовательность состояний, составляющих решение, по результатам поиска
-    //◦ Загадка может оказаться неразрешимой, в этом случае вам придется сообщить об этом пользователю и выйти.
+    private static void printLine() {
+        System.out.println(COLOR + "-----------------------------------------------------------------------------------"
+                + RESET);
+    }
 
     //TODO Добавить собственные примеры с паззлами
+    //TODO Пройтись по сабжу
     //TODO Пройтись по чеклисту
-    //TODO Проверить на паззлах с размером 3, 4, 5, 6, 7, 8, 9, 10
+    //TODO Проверить на пазлах с размером 3, 4, 5, 6, 7, 8, 9, 10
     //TODO Выбрать алгоритм а-стар: мой или из сабжа
     //TODO Проверить как работают "сложность во времени" и "сложность по размеру"
-
+    //TODO не создавать соседа если он не нужен?
+    //TODO добавить формулы в ридми
+    //TODO добавить в ридми инфо про варианты а-стар
 }

@@ -7,7 +7,7 @@ MAIN_CLASS 			= NPuzzle
 GENERATOR_SCRIPT	= npuzzle-gen.py
 GENERATOR_OUTPUT	= generated_input.txt
 SIZE 				= 4
-FLAGS 				= -i 40
+FLAGS 				=
 
 all: build
 
@@ -21,7 +21,7 @@ run:
 	$(JAVA) -cp $(OUT_DIR) $(MAIN_CLASS) $(FILE)
 
 # Правило для запуска c генерацией ввода
-puzzle: build generate
+puzzle: clean build generate
 	$(JAVA) -cp $(OUT_DIR) $(MAIN_CLASS) $(GENERATOR_OUTPUT)
 
 # Правило для генерации ввода
@@ -34,9 +34,6 @@ clean:
 
 # Правило для пересборки
 re: clean all
-
-# Правило для пересборки с генерацией ввода
-re-puzzle: clean puzzle
 
 # Указание правил, которые не являются файлами
 .PHONY: all clean fclean re

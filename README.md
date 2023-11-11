@@ -10,11 +10,11 @@ _Solving the N-puzzle game using the A* search algorithm_
 `make run FILE=[file_name]`  
 
 
-- Run with randomly generated 3x3 puzzle  
+- Run with randomly generated 3x3 puzzle (rebuilds the program)  
 `make puzzle`  
 
 
-- Run with puzzle according to the specified parameters  
+- Run with puzzle according to the specified parameters (rebuilds the program)  
 `make puzzle FLAGS='[-s] [-u] [-i]' SIZE='[size]`  
 `size` — Size of the puzzle's side (3 by default)  
 `-s` — Forces generation of a solvable puzzle  
@@ -26,12 +26,8 @@ _Solving the N-puzzle game using the A* search algorithm_
 `make clean`  
 
 
-- Rebuild the project  
-`make re`  
-
-
-- Rebuild the project and run with randomly generated 3x3 puzzle (also possible to specify parameters as in `make puzzle`)  
-`make re-puzzle`
+- Rebuild the project (without running it)  
+`make re`
 
 ## Heuristics
 To choose the heuristic function, in the file `heuristic.properties` change the value of key `heuristic` to `manhattan`, `hamming` or `euclidean`  
