@@ -1,13 +1,13 @@
 NAME				= npuzzle
 JAVAC 				= javac
-JAVA 				= java
+JAVA 				= java -Xmx2g
 SRC_DIR 			= srcs/main/java
 OUT_DIR 			= out
 MAIN_CLASS 			= NPuzzle
 GENERATOR_SCRIPT	= npuzzle-gen.py
 GENERATOR_OUTPUT	= generated_input.txt
-SIZE 				= 3
-FLAGS 				= -s -i 10
+SIZE 				= 4
+FLAGS 				= -i 40
 
 all: build
 

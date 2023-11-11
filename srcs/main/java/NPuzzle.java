@@ -55,10 +55,6 @@ public class NPuzzle {
             throw new RuntimeException("An error occurred during reflection usage", e);
         }
 
-        // TODO протестировать евклида
-        // TODO проверить правильно ли работет метод twin и проверка solvable - unsolvable
-        // TODO
-
         long endTime = System.nanoTime();
         long duration = (endTime - startTime) / 1000000;
 
@@ -67,7 +63,14 @@ public class NPuzzle {
 
     private static void printResult(Solver solver, long duration) {
         String MAGENTA = "\u001B[35m", BLUE = "\u001B[34m",
-                GREEN = "\u001B[32m", RESET = "\u001B[0m";
+                GREEN = "\u001B[32m", COLOR = "\u001B[36m",
+                RESET = "\u001B[0m";
+
+        System.out.println(COLOR + "Total number of states ever selected in the \"opened\" set (complexity in time): "
+                + solver.complexityInTime());
+
+        System.out.println("Maximum number of states ever represented in memory at the same time (complexity in size): "
+                + solver.complexityInSize() + RESET);
 
         if (solver.solution() == null) {
             System.out.println(MAGENTA + "Unsolvable puzzle" + RESET);
@@ -86,4 +89,18 @@ public class NPuzzle {
         }
         System.out.println(GREEN + "Duration: " + duration + " ms / " + duration / 1000D + " s"  + RESET);
     }
+
+    //TODO В конце поиска программа должна предоставить следующие значения:
+    //◦ Общее количество состояний, когда-либо выбранных в «открытом» наборе (сложность во времени)
+    //◦ Максимальное количество состояний, когда-либо представленных в памяти одновременно во время поиска (сложность по размеру)
+    //◦ Количество ходов, необходимое для перехода из начального состояния в конечное по данным поиска.
+    //◦ Упорядоченная последовательность состояний, составляющих решение, по результатам поиска
+    //◦ Загадка может оказаться неразрешимой, в этом случае вам придется сообщить об этом пользователю и выйти.
+
+    //TODO Добавить собственные примеры с паззлами
+    //TODO Пройтись по чеклисту
+    //TODO Проверить на паззлах с размером 3, 4, 5, 6, 7, 8, 9, 10
+    //TODO Выбрать алгоритм а-стар: мой или из сабжа
+    //TODO Проверить как работают "сложность во времени" и "сложность по размеру"
+
 }

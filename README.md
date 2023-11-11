@@ -15,10 +15,8 @@ _Solving the N-puzzle game using the A* search algorithm_
 
 
 - Run with puzzle according to the specified parameters  
-`make puzzle FLAGS='[-s] [-u] [-i] [size]'`  
-positional arguments:  
-`size` — Size of the puzzle's side  
-optional arguments:  
+`make puzzle FLAGS='[-s] [-u] [-i]' SIZE='[size]`  
+`size` — Size of the puzzle's side (3 by default)  
 `-s` — Forces generation of a solvable puzzle  
 `-u` — Forces generation of an unsolvable puzzle  
 `-i` — Number of passes
@@ -54,7 +52,7 @@ To choose the heuristic function, in the file `heuristic.properties` change the 
 h = sqrt((x1 - x2)^2 + (y1 - y2)^2)
   
 ## Some variations of the A* algorithm
-:us:  
+:gb:  
 __A* (A-star) - A* (А-звезда)__  
 __B* (B-star) - B* (B-звезда)__  
 __D* (Dynamic A*) - D* (Динамический A*)__  
