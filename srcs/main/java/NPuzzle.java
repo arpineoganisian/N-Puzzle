@@ -9,8 +9,8 @@ public class NPuzzle {
     private static final String COLOR = "\u001B[34m", RESET = "\u001B[0m";
     private static int[][] tiles = new int[0][0];
     private static int n = 0;
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
         if (args.length != 1) {
             throw new IllegalArgumentException("Wrong number of program arguments: " + args.length);
         }
@@ -36,7 +36,6 @@ public class NPuzzle {
     }
 
     private static void parse(String fileName) {
-
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line = reader.readLine();
             int i = 0;
@@ -101,13 +100,9 @@ public class NPuzzle {
         System.out.println(COLOR + "------------------------------------------------------------------------------------"
                 + RESET);
     }
-
-    //TODO Добавить собственные примеры с паззлами
     //TODO Пройтись по сабжу
     //TODO Пройтись по чеклисту
-    //TODO Проверить на пазлах с размером 3, 4, 5, 6, 7, 8, 9, 10
     //TODO Выбрать алгоритм а-стар: мой или из сабжа
-    //TODO Проверить как работают "сложность во времени" и "сложность по размеру"
     //TODO не создавать соседа если он не нужен?
     //TODO добавить формулы в ридми
     //TODO добавить в ридми инфо про варианты а-стар

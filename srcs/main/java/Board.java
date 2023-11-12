@@ -12,10 +12,9 @@ public class Board {
     public Board(int[][] tiles, int n) {
         this.n = n;
         this.tiles = createCopy(tiles);
-        createGoal(n); // GOAL will be initialized only once for all boards
     }
 
-    private void createGoal(int n) {
+    public static void createGoal(int n) {
         int value = 1;
         int row = 0, col = 0;
         for (int count = n-1; count > 0; count -= 2, row++, col++) {
@@ -33,6 +32,10 @@ public class Board {
                 GOAL.put(value++, new Coordinate(row--, col));
             }
         }
+    }
+
+    public int dimension() {
+        return n;
     }
 
     // Misplaced Tiles Heuristic: number of tiles out of place

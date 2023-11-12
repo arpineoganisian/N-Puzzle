@@ -24,6 +24,8 @@ public class Solver {
         String functionName = properties.getProperty("heuristic");
         Method method = Board.class.getMethod(functionName);
 
+        Board.createGoal(initial.dimension());
+
         PriorityQueue<Node> pq = new PriorityQueue<>(Comparator.comparingDouble(o -> o.priority));
         pq.add(new Node(initial, null, 0, (double) method.invoke(initial)));
 
@@ -35,7 +37,6 @@ public class Solver {
             if (size < allElems) size = allElems;
             Node searchNode = pq.poll();
             Node twinSearchNode = twinPq.poll();
-//            if (!searchNode.board.equals(goal) && !twinSearchNode.board.equals(goal)) {
             if (!searchNode.board.isGoal() && !twinSearchNode.board.isGoal()) {
                 for (Board b : searchNode.board.neighbors()) {
                     time++;
