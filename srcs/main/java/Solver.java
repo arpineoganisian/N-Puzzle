@@ -2,16 +2,16 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayDeque;
 import java.util.Comparator;
-import java.util.List;
+import java.util.Deque;
 import java.util.PriorityQueue;
 import java.util.Properties;
-import java.util.Stack;
 
 public class Solver {
 
     private int moves;
-    private List<Board> solution;
+    private Deque<Board> solution;
     private static long size = 0;
     private static long time = 2;
 
@@ -54,9 +54,9 @@ public class Solver {
                 return;
             } else {
                 moves = searchNode.moves;
-                solution = new Stack<>();
+                solution = new ArrayDeque<>();
                 while (searchNode != null) {
-                    solution.add(searchNode.board);
+                    solution.push(searchNode.board);
                     searchNode = searchNode.previous;
                 }
                 return;
@@ -66,7 +66,7 @@ public class Solver {
 
 //    private Solver(Board initial, int x) {
 //        PriorityQueue<Node> opened = new PriorityQueue<>(Comparator.comparingDouble(o -> o.priority));
-//        List<Board> closed = new ArrayList<>();
+//        Deque<Board> closed = new ArrayList<>();
 //        boolean success = false;
 //        Node node = new Node(initial, null, 0, 0);
 //        opened.add(node);
@@ -96,7 +96,7 @@ public class Solver {
 //            } else {
 //                success = true;
 //                moves = searchNode.moves;
-//                solution = new Stack<>();
+//                solution = new ArrayDeque<>();
 //                while (searchNode != null) {
 //                    solution.add(searchNode.board);
 //                    searchNode = searchNode.previous;
@@ -131,7 +131,7 @@ public class Solver {
         return size;
     }
 
-    public List<Board> solution() {
+    public Deque<Board> solution() {
         return solution;
     }
 

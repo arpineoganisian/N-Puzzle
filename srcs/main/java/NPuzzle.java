@@ -7,14 +7,35 @@ import java.util.Arrays;
 
 public class NPuzzle {
     private static final String COLOR = "\u001B[34m", RESET = "\u001B[0m";
-
+    private static int[][] tiles = new int[0][0];
+    private static int n = 0;
     public static void main(String[] args) {
-        if (args.length != 1)
-            throw new IllegalArgumentException("Wrong number of program arguments: " + args.length);
 
-        String fileName = args[0];
-        int[][] tiles = new int[0][0];
-        int n = 0;
+        if (args.length != 1) {
+            throw new IllegalArgumentException("Wrong number of program arguments: " + args.length);
+        }
+
+        parse(args[0]);
+
+        long startTime = System.nanoTime();
+
+        Board board = new Board(tiles, n);
+        Solver solver = null;
+        try {
+            solver = new Solver(board);
+        } catch (IOException e) {
+            throw new RuntimeException("An error occurred while reading the file: heuristic.properties", e);
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            throw new RuntimeException("An error occurred during reflection usage", e);
+        } catch (OutOfMemoryError ignored) {}
+
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime) / 1000000;
+
+        printResult(solver, duration);
+    }
+
+    private static void parse(String fileName) {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line = reader.readLine();
@@ -44,23 +65,7 @@ public class NPuzzle {
         } catch (IOException e) {
             throw new RuntimeException("An error occurred while reading the file: " + fileName, e);
         }
-
-        long startTime = System.nanoTime();
-
-        Board board = new Board(tiles, n);
-        Solver solver = null;
-        try {
-            solver = new Solver(board);
-        } catch (IOException e) {
-            throw new RuntimeException("An error occurred while reading the file: heuristic.properties", e);
-        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            throw new RuntimeException("An error occurred during reflection usage", e);
-        } catch (OutOfMemoryError ignored) {}
-
-        long endTime = System.nanoTime();
-        long duration = (endTime - startTime) / 1000000;
-
-        printResult(solver, duration);
+        System.out.println();
     }
 
     private static void printResult(Solver solver, long duration) {
@@ -71,10 +76,12 @@ public class NPuzzle {
             if (solver.moves() == -1) {
                 System.out.println(COLOR + "Unsolvable puzzle" + RESET);
             } else {
-                for (int i = 0; i < solver.solution().size(); i++) {
-                    if (solver.moves() == i) System.out.println(COLOR + "Initial board: ");
-                    else System.out.println(COLOR + "Move " + (solver.moves() - i) + ": ");
-                    System.out.println(RESET + solver.solution().get(i));
+                int i = 0;
+                while (!solver.solution().isEmpty()) {
+                    if (i == 0) System.out.println(COLOR + "Initial board: ");
+                    else System.out.println(COLOR + "Move " + i + ": ");
+                    System.out.println(RESET + solver.solution().pop());
+                    i++;
                 }
                 printLine();
                 System.out.println("Minimum number of moves: " + COLOR + solver.moves() + RESET);
@@ -82,16 +89,16 @@ public class NPuzzle {
         }
         printLine();
         System.out.println("Total number of states ever selected (complexity in time): "
-                + COLOR + Solver.complexityInTime() + RESET);
+                + COLOR + String.format("%,d", Solver.complexityInTime()) + RESET);
         System.out.println("Maximum number of states represented in memory ATST (complexity in size): "
-                + COLOR + Solver.complexityInSize() + RESET);
+                + COLOR + String.format("%,d", Solver.complexityInSize()) + RESET);
         printLine();
-        System.out.println("Duration: " + COLOR + duration + " ms / " + duration / 1000D + " s"  + RESET);
+        System.out.println("Duration: " + COLOR + duration / 1000D + " s"  + RESET);
         printLine();
     }
 
     private static void printLine() {
-        System.out.println(COLOR + "-----------------------------------------------------------------------------------"
+        System.out.println(COLOR + "------------------------------------------------------------------------------------"
                 + RESET);
     }
 
@@ -104,4 +111,5 @@ public class NPuzzle {
     //TODO не создавать соседа если он не нужен?
     //TODO добавить формулы в ридми
     //TODO добавить в ридми инфо про варианты а-стар
+    //todo утечки памяти?
 }

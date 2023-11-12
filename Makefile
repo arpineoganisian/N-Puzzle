@@ -1,6 +1,6 @@
 NAME				= npuzzle
 JAVAC 				= javac
-JAVA 				= java -Xmx2g
+JAVA 				= java #-Xmx2g
 SRC_DIR 			= srcs/main/java
 OUT_DIR 			= out
 MAIN_CLASS 			= NPuzzle
