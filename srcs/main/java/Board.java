@@ -104,7 +104,7 @@ public class Board {
         }
         return true;
     }
-    public Iterable<Board> neighbors() {
+    public Iterable<Board> neighbours() {
         List<Board> neighbours = new ArrayList<>();
         int row = -1;
         int col = -1;
