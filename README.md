@@ -34,18 +34,29 @@ To choose the heuristic function, in the file `heuristic.properties` change the 
 
 :gb:
 ### Manhattan distance (Taxicab, City-Block)
+- Manhattan distance is a measure of the distance between two points in a grid-based
+system (like a city grid) measured along the grid lines.
+- It is named "Manhattan distance" because it reflects the distance a car would travel on a
+grid of streets in Manhattan, where travel can only occur along north-south and east-west paths.
+- The formula for Manhattan distance between two points $`(x_{1}, y_{1})`$ and $`(x_{2}, y_{2})`$: $`\|{x_{2} - x_{1}| + \|y_{2} - y_{1}|`$    
 ### Hamming distance (Misplaced Tiles)
+- It counts the number of positions at which the corresponding symbols (tiles) are different.
 ### Euclidean Distance 
+- Euclidean distance is a measure of the straight-line distance between two points in Euclidean space.
+- It is derived from the Pythagorean theorem and represents the length of the shortest path between two points.
+- For two points $`(x_{1}, y_{1})`$ and $`(x_{2}, y_{2})`$ the Euclidean distance is given by: $`\sqrt{(x_{2} - x_{1})^2 + (y_{2} - y_{1})^2}`$
 
 :ru:  
-### Манхэттенское расстояние (Manhattan distance, Taxicab, City-Block)
-Эта эвристика определяет общее смещение всех плиток от их правильных позиций по вертикали и горизонтали (то есть количество ходов от текущей до целевой позиции для каждой плитки). Сумма этих расстояний для всех плиток дает оценку общего расстояния между текущим и целевым состоянием.
+### Манхеттенское расстояние (Manhattan distance, Taxicab, City-Block)
+- Манхеттенское расстояние представляет собой расстояние между двумя точками в системе на основе сетки.
+- Оно названо "Манхеттенским расстоянием", потому что отражает расстояние, которое машина проезжает по сетке улиц в Манхэттене, где движение возможно только вдоль путей север-юг и запад-восток.
+- Формула для Манхеттенского расстояния между двумя точками $`(x_{1}, y_{1})`$ и $`(x_{2}, y_{2})`$: $`|x_{2} - x_{1}| + |{y_{2} - y_{1}|`$
 ### Количество неправильных плиток (Hamming distance, Misplaced Tiles)
-Подсчитывает количество плиток, находящихся не на своих местах в текущем состоянии пазла. Чем больше неправильных плиток, тем дальше текущее состояние от целевого.
+- Подсчитывает количество плиток, находящихся не на своих местах в текущем состоянии пазла. Чем больше неправильных плиток, тем дальше текущее состояние от целевого.
 ### Евклидово расстояние (Euclidean Distance)
-В этой эвристике используется евклидово расстояние между текущим положением плитки и ее целевым положением в двумерном пространстве. Эта эвристика может быть менее информативной для задачи N-пазл, чем «Манхэттенское расстояние».  
-Евклидова эвристика для N-puzzle определяется как квадратный корень суммы квадратов разницы между координатами плиток в текущем и целевом состоянии. То есть:
-h = sqrt((x1 - x2)^2 + (y1 - y2)^2)
+- Прямолинейное расстояния между двумя точками в евклидовом пространстве.
+- Оно происходит из теоремы Пифагора и представляет собой длину кратчайшего пути между двумя точками.
+- Для двух точек $`(x_{1}, y_{1})`$ и $`(x_{2}, y_{2})`$ Евклидово расстояние вычисляется по формуле: $`\sqrt{(x_{2} - x_{1})^2 + (y_{2} - y_{1})^2}`$
   
 ## Some variations of the A* algorithm
 :gb:  
