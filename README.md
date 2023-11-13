@@ -30,15 +30,15 @@ _Solving the N-puzzle game using the A* search algorithm_
 `make re`
 
 ## Heuristics
-To choose the heuristic function, in the file `heuristic.properties` change the value of key `heuristic` to `manhattan`, `hamming` or `euclidean`  
+To choose the heuristic function, in the file `heuristic.properties` change the value of key `heuristic` to:  
+`manhattan`, `hamming` or `euclidean`  
 
-:gb:
-### Manhattan distance (Taxicab, City-Block)
+### :gb: Manhattan distance (Taxicab, City-Block)
 - Manhattan distance is a measure of the distance between two points in a grid-based
 system (like a city grid) measured along the grid lines.
 - It is named "Manhattan distance" because it reflects the distance a car would travel on a
 grid of streets in Manhattan, where travel can only occur along north-south and east-west paths.
-- The formula for Manhattan distance between two points $`(x_{1}, y_{1})`$ and $`(x_{2}, y_{2})`$: $`\|{x_{2} - x_{1}| + \|y_{2} - y_{1}|`$    
+- The formula for Manhattan distance between two points $`(x_{1}, y_{1})`$ and $`(x_{2}, y_{2})`$ is given by: $`|x_{2} - x_{1}| + |y_{2} - y_{1}|`$    
 ### Hamming distance (Misplaced Tiles)
 - It counts the number of positions at which the corresponding symbols (tiles) are different.
 ### Euclidean Distance 
@@ -46,11 +46,10 @@ grid of streets in Manhattan, where travel can only occur along north-south and 
 - It is derived from the Pythagorean theorem and represents the length of the shortest path between two points.
 - For two points $`(x_{1}, y_{1})`$ and $`(x_{2}, y_{2})`$ the Euclidean distance is given by: $`\sqrt{(x_{2} - x_{1})^2 + (y_{2} - y_{1})^2}`$
 
-:ru:  
-### Манхеттенское расстояние (Manhattan distance, Taxicab, City-Block)
+### :ru: Манхеттенское расстояние (Manhattan distance, Taxicab, City-Block)
 - Манхеттенское расстояние представляет собой расстояние между двумя точками в системе на основе сетки.
 - Оно названо "Манхеттенским расстоянием", потому что отражает расстояние, которое машина проезжает по сетке улиц в Манхэттене, где движение возможно только вдоль путей север-юг и запад-восток.
-- Формула для Манхеттенского расстояния между двумя точками $`(x_{1}, y_{1})`$ и $`(x_{2}, y_{2})`$: $`|x_{2} - x_{1}| + |{y_{2} - y_{1}|`$
+- Манхеттенского расстояния между двумя точками $`(x_{1}, y_{1})`$ и $`(x_{2}, y_{2})`$ вычесляется по формуле: $`|x_{2} - x_{1}| + |y_{2} - y_{1}|`$
 ### Количество неправильных плиток (Hamming distance, Misplaced Tiles)
 - Подсчитывает количество плиток, находящихся не на своих местах в текущем состоянии пазла. Чем больше неправильных плиток, тем дальше текущее состояние от целевого.
 ### Евклидово расстояние (Euclidean Distance)
