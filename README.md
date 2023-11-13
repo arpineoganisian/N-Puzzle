@@ -101,7 +101,7 @@ __Parallel A* - Параллельный A*__
 
 
 
-https://theory.stanford.edu/~amitp/GameProgramming/Variations.html
-https://github.com/mharriso/school21-checklists/blob/master/ng_algo_n-puzzle.pdf
-https://neerc.ifmo.ru/wiki/index.php?title=Алгоритм_A*
+https://theory.stanford.edu/~amitp/GameProgramming/Variations.html  
+https://github.com/mharriso/school21-checklists/blob/master/ng_algo_n-puzzle.pdf  
+https://neerc.ifmo.ru/wiki/index.php?title=Алгоритм_A*  
 
