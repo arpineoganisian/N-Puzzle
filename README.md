@@ -75,33 +75,26 @@ In essence, the function $`f(v)`$ denotes the length of the path to the goal, co
 In the main A* loop, the OPEN set stores all the nodes that may need to be searched to find a path. The Beam Search is a variation of A* that places a limit on the size of the OPEN set. If the set becomes too large, the node with the worst chances of giving a good path is dropped. One drawback is that you have to keep your set sorted to do this, which limits the kinds of data structures you’d choose.
 
 ### Iterative deepening A* (IDA*)
+The name comes from game tree searches, where you look some number of moves ahead. You can try to deepen the tree by looking ahead more moves. Once your answer doesn’t change or improve much, you assume that you have a pretty good answer, and it won’t improve. In IDA*, the “depth” is a cutoff for $`f(v)`$ values. When the $`f(v)`$ value is too large, the node won’t even be considered (i.e., it won’t be added to the OPEN set). The first time through you process very few nodes. Each subsequent pass, you increase the number of nodes you visit. If you find that the path improves, then you continue to increase the cutoff; otherwise, you can stop. For more details, read these lecture nodes on IDA*.
 
 
 :ru:  
 ### Beam search
 В основном цикле A* структура данных OPEN хранит все узлы, которые, возможно, потребуется выполнить поиск, чтобы найти путь. Поиск луча - это вариация A*, которая ограничивает размер набора OPEN. Если набор становится слишком большим, узел с наихудшими шансами дать хороший путь отбрасывается. Одним из недостатков является то, что для этого вы должны отсортировать свой набор, что ограничивает типы структур данных, которые вы выберете.
 
+### Iterative deepening A* (IDA*)
+Название происходит от поиска в дереве игр, при котором вы просматриваете некоторое количество ходов вперед. Вы можете попытаться углубить дерево, просматривая вперед больше ходов. Если ваш ответ не сильно изменится или не улучшится, вы предполагаете, что у вас есть довольно хороший ответ, и он не улучшится, когда вы снова попытаетесь сделать его более точным. В IDA* «глубина» — это граница значений f. Когда значение f слишком велико, узел даже не будет рассматриваться (т. е. он не будет добавлен в набор OPEN). В первый раз вы обрабатываете очень мало узлов. При каждом последующем проходе вы увеличиваете количество посещаемых узлов. Если вы обнаружите, что путь улучшается, вы продолжаете увеличивать отсечку; в противном случае вы можете остановиться.
 
 
 
 
 
+## Sources:
+- [Red Blob Games](https://www.redblobgames.com)
+- [Алгоритм A*](https://neerc.ifmo.ru/wiki/index.php?title=Алгоритм_A*)
 
-
-
-__A* (A-star) - A* (А-звезда)__  
-__B* (B-star) - B* (B-звезда)__  
-__D* (Dynamic A*) - D* (Динамический A*)__  
-__RTA* (Real-time A*) - RTA* (A* в реальном времени)__  
-__Adaptive A* - Адаптивный A*__  
-__Anytime Repairing A* - A* с постоянным улучшением__  
-__Lifelong Planning A* - A* для долгосрочного планирования__  
-__A* with limited memory - A* с ограниченной памятью__  
-__Parallel A* - Параллельный A*__
-
-
-
-https://theory.stanford.edu/~amitp/GameProgramming/Variations.html  
-https://github.com/mharriso/school21-checklists/blob/master/ng_algo_n-puzzle.pdf  
 https://neerc.ifmo.ru/wiki/index.php?title=Алгоритм_A*  
+
+https://www.redblobgames.com
+
 
