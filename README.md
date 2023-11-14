@@ -81,6 +81,10 @@ In the main A* loop, the OPEN set stores all the nodes that may need to be searc
 The name comes from game tree searches, where you look some number of moves ahead. You can try to deepen the tree by looking ahead more moves. Once your answer doesn’t change or improve much, you assume that you have a pretty good answer, and it won’t improve. In IDA*, the “depth” is a cutoff for $`f(v)`$ values. When the $`f(v)`$ value is too large, the node won’t even be considered (i.e., it won’t be added to the OPEN set). The first time through you process very few nodes. Each subsequent pass, you increase the number of nodes you visit. If you find that the path improves, then you continue to increase the cutoff; otherwise, you can stop.
 
 ### Weighted A*
+In Weighted A*, this estimated cost $`р(v)`$ is multiplied by a weight factor $`w`$ before being added to the actual cost $`g(v)`$ to form the evaluation function $`f(v)=g(v)+w*h(v)`$. This modification allows for adjusting the influence of the heuristic estimation on the selection of the next node to explore. By tuning this weight factor, one can control the trade-off between the speed of the search and the optimality of the path found.
+
+Dijsktra’s Algorithm uses only $`g(v)`$ and Greedy Best First Search uses only $`h(v)`$. The weight is a way to smoothly interpolate between these two algorithms, where a weight of 0 means Dijkstra’s Algorithm and a weight of ∞ means Greedy Best First Search. A weight of 1.0 is halfway between the two extremes, giving A*.
+
 
 
 :ru:  
@@ -117,11 +121,11 @@ OPEN. Для каждого текущего состояния генериру
 IDA* сочетает в себе преимущества алгоритма А* (поиск с использованием эвристической информации) с итеративным углублением, что позволяет эффективно находить оптимальные пути в графах с большим числом состояний.
 
 ### Weighted A*
-При использовании взвешенного A* для оценки общей стоимости пути от начальной вершины до цели умножается эвристическая оценка на некоторый коэффициент веса $`w`$ (обычно это положительное число): $`f(v)=g(v)+w*h(v)`$ Это позволяет увеличивать или уменьшать влияние эвристической функции на выбор следующего узла для раскрытия.
+При использовании Weighted A* для оценки общей стоимости пути от начальной вершины до цели умножается эвристическая оценка на некоторый коэффициент веса $`w`$ (обычно это положительное число): $`f(v)=g(v)+w*h(v)`$. Это позволяет увеличивать или уменьшать влияние эвристической функции на выбор следующего узла для раскрытия. 
 
-Если вес равен 1, то взвешенный A* эквивалентен стандартному алгоритму A*. Увеличение веса эвристической функции делает алгоритм менее информированным, что может привести к быстрому завершению поиска, но не гарантирует нахождение оптимального пути. Уменьшение веса, напротив, делает алгоритм более информированным, но может привести к более долгому времени поиска.
+Изменение веса эвристической функции позволяет настраивать баланс между скоростью поиска и точностью оптимальности найденного пути. Aлгоритм Дейсктры использует только $`g(v)`$, а жадный поиск по использует только $`h(v)`$. Вес — это способ плавной интерполяции между этими двумя алгоритмами, где вес 0 означает алгоритм Дейкстры, а вес ∞ означает жадный поиск наилучшего первого варианта. Вес 1,0 находится посередине между двумя крайностями.
 
-Изменение веса эвристической функции позволяет настраивать баланс между скоростью поиска и точностью оптимальности найденного пути.
+
 
 ## Sources:
 - [Red Blob Games](https://www.redblobgames.com)
