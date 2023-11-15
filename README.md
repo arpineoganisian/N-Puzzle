@@ -132,3 +132,7 @@ IDA* сочетает в себе преимущества алгоритма А
 - [Алгоритм A*](https://neerc.ifmo.ru/wiki/index.php?title=Алгоритм_A*)
 - [Variants of A*](https://theory.stanford.edu/~amitp/GameProgramming/Variations.html)
 - [Finding Optimal Solutions to the Twenty-Four Puzzle](https://cdn.aaai.org/AAAI/1996/AAAI96-178.pdf)
+- [Solving the 15-Puzzle](https://cseweb.ucsd.edu//~ccalabro/essays/15_puzzle.pdf)
+- [Shortest solution for the N-Puzzle is intractable](https://cdn.aaai.org/AAAI/1986/AAAI86-027.pdf)
+- [Efficiently Searching the 15-Puzzle](https://era.library.ualberta.ca/items/2f674920-ad11-4e40-b7a0-e718cb23ebf6/view/fe341ba3-5fd9-456f-b305-e8b44caeb4a2/TR94-08.pdf)
+- [IDA*](https://ru.wikipedia.org/wiki/Информированный_метод_поиска#IDA*)
