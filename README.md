@@ -88,19 +88,22 @@ The name comes from game tree searches, where you look some number of moves ahea
 In Weighted A*, this estimated cost $`р(v)`$ is multiplied by a weight factor $`w`$ before being added to the actual cost $`g(v)`$ to form the evaluation function $`f(v)=g(v)+w*h(v)`$. This modification allows for adjusting the influence of the heuristic estimation on the selection of the next node to explore. By tuning this weight factor, one can control the trade-off between the speed of the search and the optimality of the path found.  
 Dijsktra’s Algorithm uses only $`g(v)`$ and Greedy Best First Search uses only $`h(v)`$. The weight is a way to smoothly interpolate between these two algorithms, where a weight of 0 means Dijkstra’s Algorithm and a weight of ∞ means Greedy Best First Search. A weight of 1.0 is halfway between the two extremes, giving A*.
 
-## Bandwidth search
+## B*
+
   
-### :ru: Поиск по лучу (Beam search)
+### :ru: Beam search (Поиск по лучу)
 В основном цикле A* множество "opened" хранит все узлы, которые могут потребоваться для поиска пути. Поиск по лучу - вариация A*, которая устанавливает ограничение на размер множества "opened". Если набор становится слишком большим, узел с наименьшими шансами дать хороший путь исключается. Один из недостатков заключается в необходимости поддерживать отсортированное множество, что ограничивает выбор структур данных.
 
-### Итеративное углубление (IDA*)
+### Iterative deepening A* (Итеративное углубление)
 Название происходит от поиск в игровом дереве (Game Tree Search - это метод, применяемый в теории игр и искусственном интеллекте для анализа возможных ходов в игре), при котором вы просматриваете некоторое количество ходов вперед. Вы можете попытаться углубить дерево, рассматривая больше ходов вперед. Когда ваш ответ перестает изменяться или улучшаться значительно, можно считать, что у вас уже есть довольно хороший ответ, и дальнейшее углубление не даст существенных улучшений. В IDA* "глубина" - это пороговое значение $`f(v)`$. Когда значение $`f(v)`$ слишком велико, узел даже не рассматривается (то есть его не добавляют в множество "opened"). Первый проход обрабатывает очень небольшое количество узлов. На каждом последующем проходе увеличивается количество посещаемых узлов. Если вы обнаружите, что путь улучшается, вы продолжаете увеличивать отсечение. 
 
-### Weighted A*
+### Weighted A* (Взвешенный A*)
 При использовании Weighted A* для оценки общей стоимости пути от начальной вершины до цели умножается эвристическая оценка на некоторый коэффициент веса $`w`$ (обычно это положительное число): $`f(v)=g(v)+w*h(v)`$. Это позволяет увеличивать или уменьшать влияние эвристической функции на выбор следующего узла для раскрытия. 
 Изменение веса эвристической функции позволяет настраивать баланс между скоростью поиска и точностью оптимальности найденного пути. Aлгоритм Дейсктры использует только $`g(v)`$, а жадный поиск по использует только $`h(v)`$. Вес — это способ плавной интерполяции между этими двумя алгоритмами, где вес 0 означает алгоритм Дейкстры, а вес ∞ означает жадный поиск наилучшего первого варианта. Вес 1,0 находится посередине между двумя крайностями.
 
-## Bandwidth search
+## B* 
+Как и A*, B* использует эвристическую оценку для принятия решения о том, какой путь следует исследовать дальше. Однако, в отличие от A*, B* позволяет динамически изменять свою оценку, улучшая качество найденного пути.
+
 
 ## Sources:
 - [Red Blob Games](https://www.redblobgames.com)
@@ -111,4 +114,5 @@ Dijsktra’s Algorithm uses only $`g(v)`$ and Greedy Best First Search uses only
 - [Shortest solution for the N-Puzzle is intractable](https://cdn.aaai.org/AAAI/1986/AAAI86-027.pdf)
 - [Efficiently Searching the 15-Puzzle](https://era.library.ualberta.ca/items/2f674920-ad11-4e40-b7a0-e718cb23ebf6/view/fe341ba3-5fd9-456f-b305-e8b44caeb4a2/TR94-08.pdf)
 - [IDA*](https://ru.wikipedia.org/wiki/Информированный_метод_поиска#IDA*)
+- [B*](https://ru.wikipedia.org/wiki/Алгоритм_поиска_B*)
 - [Solvable/Unsolvable](https://www.geeksforgeeks.org/check-instance-15-puzzle-solvable/)
