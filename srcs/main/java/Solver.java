@@ -5,6 +5,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayDeque;
 import java.util.Comparator;
 import java.util.Deque;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.PriorityQueue;
 import java.util.Properties;
 
@@ -13,58 +15,64 @@ public class Solver {
     private int moves;
     private Deque<Board> solution;
     private static long size = 0;
-    private static long time = 2;
+    private static long time = 0;
 
     public Solver(Board initial) throws IOException, NoSuchMethodException, InvocationTargetException,
             IllegalAccessException, OutOfMemoryError {
         if (initial == null) throw new IllegalArgumentException();
 
-        Properties properties = new Properties();
-        properties.load(new FileInputStream("srcs/main/resources/heuristic.properties"));
-        String functionName = properties.getProperty("heuristic");
-        Method heuristic = Board.class.getMethod(functionName);
-
         Board.createGoal(initial.dimension());
+        Method heuristic = extractHeuristic();
 
-        PriorityQueue<Node> pq = new PriorityQueue<>(Comparator.comparingDouble(o -> o.priority));
-        pq.add(new Node(initial, null, 0, (double) heuristic.invoke(initial)));
+        PriorityQueue<Node> opened = new PriorityQueue<>(Comparator.comparingDouble(o -> o.priority));
+        opened.add(new Node(initial, null, 0, (double) heuristic.invoke(initial)));
+        HashSet<Node> closed = new HashSet<>();
 
-        PriorityQueue<Node> twinPq = new PriorityQueue<>(Comparator.comparingDouble(o -> o.priority));
-        twinPq.add(new Node(initial.twin(), null, 0, (double) heuristic.invoke(initial)));
+        PriorityQueue<Node> twinOpened = new PriorityQueue<>(Comparator.comparingDouble(o -> o.priority));
+        twinOpened.add(new Node(initial.twin(), null, 0, (double) heuristic.invoke(initial.twin())));
+        HashSet<Node> twinClosed = new HashSet<>();
 
-        while (!pq.isEmpty() && !twinPq.isEmpty()) {
-            int allElems = pq.size() + twinPq.size();
-            if (size < allElems) size = allElems;
-            Node searchNode = pq.poll();
-            Node twinSearchNode = twinPq.poll();
-            if (!searchNode.board.isGoal() && !twinSearchNode.board.isGoal()) {
-                addNewNodes(searchNode,     pq,     heuristic);
-                addNewNodes(twinSearchNode, twinPq, heuristic);
-            } else if (twinSearchNode.board.isGoal()) {
+        while (!opened.isEmpty() && !twinOpened.isEmpty()) {
+            time ++;
+            size = Math.max(size, opened.size() + closed.size() + twinOpened.size() + twinClosed.size());
+            Node current = opened.poll();
+            Node twinCurrent = twinOpened.poll();
+            if (current.board.isGoal()) {
+                moves = current.moves;
+                solution = new ArrayDeque<>();
+                while (current != null) {
+                    System.out.println(current.priority);
+                    solution.push(current.board);
+                    current = current.previous;
+                }
+                return;
+            } else if (twinCurrent.board.isGoal()) {
                 moves = -1;
                 return;
             } else {
-                moves = searchNode.moves;
-                solution = new ArrayDeque<>();
-                while (searchNode != null) {
-                    solution.push(searchNode.board);
-                    searchNode = searchNode.previous;
-                }
-                return;
+                addNewNodes(current, opened, closed, heuristic);
+                closed.add(current);
+                addNewNodes(twinCurrent, twinOpened, twinClosed, heuristic);
+                twinClosed.add(twinCurrent);
             }
         }
     }
 
+    private Method extractHeuristic() throws IOException, NoSuchMethodException {
+        Properties properties = new Properties();
+        properties.load(new FileInputStream("srcs/main/resources/heuristic.properties"));
+        String functionName = properties.getProperty("heuristic");
+        return Board.class.getMethod(functionName);
+    }
 
-    private void addNewNodes(Node searchNode, PriorityQueue<Node> pq, Method heuristic)
+    private void addNewNodes(Node current, PriorityQueue<Node> opened, HashSet<Node> closed, Method heuristic)
             throws InvocationTargetException, IllegalAccessException {
-        for (Board b : searchNode.board.neighbours()) {
-            time++;
-            if (searchNode.previous == null || !b.equals(searchNode.previous.board)) {
-                Node n = new Node(b, searchNode, searchNode.moves + 1,
-                        searchNode.moves + 1 + (double) heuristic.invoke(b));
-                pq.add(n);
-            }
+        for (Board b : current.board.neighbours()) {
+            Node n = new Node(b, current, current.moves + 1,
+                    current.moves + 1 + (double) heuristic.invoke(b));
+            if (n.equals(current.previous)) continue;
+            if (!closed.contains(n))
+                opened.add(n);
         }
     }
 
@@ -88,8 +96,8 @@ public class Solver {
 
     private static class Node {
         Board board;
-        double priority;
-        int moves;
+        double priority; // f(n) = g(n) + h(n)
+        int moves; // g(n)
         Node previous;
 
         public Node(Board board, Node previous, int moves, double priority) {
@@ -97,6 +105,18 @@ public class Solver {
             this.previous = previous;
             this.moves = moves;
             this.priority = priority;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj == null || getClass() != obj.getClass()) return false;
+            return this.board.equals(((Node) obj).board);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(board);
         }
     }
 }

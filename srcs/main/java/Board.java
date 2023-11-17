@@ -14,6 +14,35 @@ public class Board {
         this.tiles = createCopy(tiles);
     }
 
+//    public boolean isSolvable() {
+//        // n*n represents empty tile (0)
+//        int count = 0;
+//        int rowOfEmpty = 0;
+//        int colOfEmpty = 0;
+//        for (int x = 1; x <= GOAL.size(); x++) {
+//            for (int y = x+1; y <= GOAL.size(); y++) {
+//                int i1 = GOAL.get(x).i;
+//                int j1 = GOAL.get(x).j;
+//                int i2 = GOAL.get(y).i;
+//                int j2 = GOAL.get(y).j;
+//                if (tiles[i1][j1] != 0 && tiles[i2][j2] != 0
+//                    && tiles[i1][j1] > tiles[i2][j2])
+//                    count++;
+//                else if (tiles[i1][j1] == 0) {
+//                    rowOfEmpty = i1;
+//                    colOfEmpty = j1;
+//                }
+//            }
+//        }
+//        System.out.println(rowOfEmpty + ", " + colOfEmpty);
+//        if (isEven(n))  return isEven(count) ^ isEven(n-rowOfEmpty);
+//        else            return isEven(count);
+//    }
+
+    private boolean isEven(int x) {
+        return x % 2 == 0;
+    }
+
     public static void createGoal(int n) {
         int value = 1;
         int row = 0, col = 0;
@@ -28,10 +57,10 @@ public class Board {
                 GOAL.put(value++, new Coordinate(row, col--));
             }
             for (int i = 0; i < count; i++) {
-                if (value == n*n) break;
                 GOAL.put(value++, new Coordinate(row--, col));
             }
         }
+        GOAL.putIfAbsent(n*n, new Coordinate(row, col));
     }
 
     public int dimension() {
@@ -93,6 +122,7 @@ public class Board {
         }
         return result;
     }
+
     public boolean isGoal() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -104,6 +134,7 @@ public class Board {
         }
         return true;
     }
+
     public Iterable<Board> neighbours() {
         List<Board> neighbours = new ArrayList<>();
         int row = -1;
@@ -136,6 +167,10 @@ public class Board {
         return Arrays.deepEquals(tiles, ((Board) y).tiles);
     }
 
+    public int hashCode() {
+        return Arrays.deepHashCode(tiles);
+    }
+
     public String toString() {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < n; i++) {
@@ -146,6 +181,7 @@ public class Board {
         }
         return result.toString();
     }
+
     private Board createBoardWithSwap(int rowA, int colA,
                                       int rowB, int colB, int value) {
         int[][] copy = createCopy(tiles);
