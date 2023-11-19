@@ -89,7 +89,7 @@ In Weighted A*, this estimated cost $`р(v)`$ is multiplied by a weight factor $
 Dijsktra’s Algorithm uses only $`g(v)`$ and Greedy Best First Search uses only $`h(v)`$. The weight is a way to smoothly interpolate between these two algorithms, where a weight of 0 means Dijkstra’s Algorithm and a weight of ∞ means Greedy Best First Search. A weight of 1.0 is halfway between the two extremes, giving A*.
 
 ## B*
-
+B* is a complex algorithm used for optimal path selection, considering upper and lower value bounds for each node. In contrast to A*, which stores all explored nodes in memory, B* optimizes resource usage by recalculating values as needed. It also employs upper and lower value estimates to determine the best path, enabling route refinement amidst changing information. A*, on the other hand, utilizes static heuristic evaluation for distance estimation to the goal and does not alter it during the search. Consequently, B* demonstrates more adaptable behavior to changing data and more resource efficiency, while A* relies on static heuristics and holds a larger memory footprint, potentially being more resource-intensive.
   
 ### :ru: Beam search (Поиск по лучу)
 В основном цикле A* множество "opened" хранит все узлы, которые могут потребоваться для поиска пути. Поиск по лучу - вариация A*, которая устанавливает ограничение на размер множества "opened". Если набор становится слишком большим, узел с наименьшими шансами дать хороший путь исключается. Один из недостатков заключается в необходимости поддерживать отсортированное множество, что ограничивает выбор структур данных.
@@ -101,8 +101,8 @@ Dijsktra’s Algorithm uses only $`g(v)`$ and Greedy Best First Search uses only
 При использовании Weighted A* для оценки общей стоимости пути от начальной вершины до цели умножается эвристическая оценка на некоторый коэффициент веса $`w`$ (обычно это положительное число): $`f(v)=g(v)+w*h(v)`$. Это позволяет увеличивать или уменьшать влияние эвристической функции на выбор следующего узла для раскрытия. 
 Изменение веса эвристической функции позволяет настраивать баланс между скоростью поиска и точностью оптимальности найденного пути. Aлгоритм Дейсктры использует только $`g(v)`$, а жадный поиск по использует только $`h(v)`$. Вес — это способ плавной интерполяции между этими двумя алгоритмами, где вес 0 означает алгоритм Дейкстры, а вес ∞ означает жадный поиск наилучшего первого варианта. Вес 1,0 находится посередине между двумя крайностями.
 
-## B* 
-Как и A*, B* использует эвристическую оценку для принятия решения о том, какой путь следует исследовать дальше. Однако, в отличие от A*, B* позволяет динамически изменять свою оценку, улучшая качество найденного пути.
+### B* 
+Это сложный алгоритм, который используется для выбора оптимального пути, учитывая верхние и нижние границы значений для каждой вершины.В отличие от A*, который хранит все рассмотренные вершины в памяти, B* оптимизирует использование ресурсов, пересчитывая значения по мере необходимости. Он также использует верхние и нижние оценки значений для определения наилучшего пути, что позволяет уточнять маршрут с изменением информации. A* же использует статическую эвристику для оценки расстояния до цели и не меняет её в процессе поиска. Таким образом, B* способен более гибко адаптироваться к изменяющейся информации и более эффективно использовать ресурсы, в то время как A* использует статическую эвристику и хранит больше информации в памяти, что может быть более затратным.
 
 
 ## Sources:
@@ -114,5 +114,5 @@ Dijsktra’s Algorithm uses only $`g(v)`$ and Greedy Best First Search uses only
 - [Shortest solution for the N-Puzzle is intractable](https://cdn.aaai.org/AAAI/1986/AAAI86-027.pdf)
 - [Efficiently Searching the 15-Puzzle](https://era.library.ualberta.ca/items/2f674920-ad11-4e40-b7a0-e718cb23ebf6/view/fe341ba3-5fd9-456f-b305-e8b44caeb4a2/TR94-08.pdf)
 - [IDA*](https://ru.wikipedia.org/wiki/Информированный_метод_поиска#IDA*)
-- [B*](https://ru.wikipedia.org/wiki/Алгоритм_поиска_B*)
+- [B*](https://aitopics.org/download/classics:CA55BFAA)
 - [Solvable/Unsolvable](https://www.geeksforgeeks.org/check-instance-15-puzzle-solvable/)
