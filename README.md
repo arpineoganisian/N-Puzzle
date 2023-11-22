@@ -1,7 +1,7 @@
 # N-Puzzle
 _Solving the N-puzzle game using the A* search algorithm_
 
-N Puzzle is a sliding blocks game that takes place on a k * k grid with ((k * k) - 1) tiles each numbered from 1 to N. The task is to reposition the tiles to their proper order. 
+N Puzzle is a sliding blocks game that takes place on a N * N grid with N * N - 1 tiles each numbered from 1 to N. The task is to reposition the tiles to their proper order. 
 
 <img src="example_of_snail_solution.png" width="300" height="300">  
 
@@ -19,7 +19,7 @@ N Puzzle is a sliding blocks game that takes place on a k * k grid with ((k * k)
 
 
 - Run with puzzle according to the specified parameters (rebuilds the program)  
-`make puzzle FLAGS='[-s] [-u] [-i]' SIZE='[size]`  
+`make puzzle FLAGS='[-s] [-u] [-i]' SIZE=[size]`  
 `size` — Size of the puzzle's side (3 by default)  
 `-s` — Forces generation of a solvable puzzle  
 `-u` — Forces generation of an unsolvable puzzle  
@@ -67,12 +67,12 @@ grid of streets in Manhattan, where travel can only occur along north-south and 
 
 :gb: During the algorithm execution, the function $`f(v)=g(v)+h(v)`$ is computed for vertices
 - $`g(v)`$ represents the minimal cost of the path to vertex $`v`$ from the starting vertex
-- $`h(v)`$ is the heuristic estimation of the cost from vertex $`v`$ to the final goal
+- $`h(v)`$ is the heuristic estimation of the cost from vertex $`v`$ to the final goal  
 In essence, the function $`f(v)`$ denotes the length of the path to the goal, composed of the traversed distance $`g(v)`$ and the remaining distance $`h(v)`$. The smaller the value of $`f(v)`$, the earlier we will explore the vertex $`v`$, as it is assumed to reach the goal distance more efficiently. Vertices explored by the algorithm can be stored in a priority queue based on the value of $`f(v)`$. A* operates similarly to Dijkstra's algorithm, examining routes to the goal in order of their current optimality based on available information (heuristic function).
 
 :ru: В процессе работы алгоритма для вершин рассчитывается функция $`f(v)=g(v)+h(v)`$ 
 - $`g(v)`$ - наименьшая стоимость пути в $`v`$ из стартовой вершины, в нашем контексте - количество ходов (передвежений)
-- $`h(v)`$ - эвристическое приближение стоимости пути от $`v`$ до конечной цели, в нашем контексте - 3 эвристические функции на выбор
+- $`h(v)`$ - эвристическое приближение стоимости пути от $`v`$ до конечной цели, в нашем контексте - 3 эвристические функции на выбор  
 Фактически, функция $`f(v)`$ — длина пути до цели, которая складывается из пройденного расстояния $`g(v)`$ и оставшегося расстояния $`h(v)`$. Исходя из этого, чем меньше значение $`f(v)`$, тем раньше мы откроем вершину $`v`$, так как через неё мы предположительно достигнем расстояние до цели быстрее всего. Открытые алгоритмом вершины можно хранить в очереди с приоритетом по значению $`f(v)`$. А* действует подобно алгоритму Дейкстры и просматривает среди всех маршрутов ведущих к цели сначала те, которые благодаря имеющейся информации (эвристическая функция) в данный момент являются наилучшими.
 
   
@@ -95,7 +95,7 @@ B* is a complex algorithm used for optimal path selection, considering upper and
 В основном цикле A* множество "opened" хранит все узлы, которые могут потребоваться для поиска пути. Поиск по лучу - вариация A*, которая устанавливает ограничение на размер множества "opened". Если набор становится слишком большим, узел с наименьшими шансами дать хороший путь исключается. Один из недостатков заключается в необходимости поддерживать отсортированное множество, что ограничивает выбор структур данных.
 
 ### Iterative deepening A* (Итеративное углубление)
-Название происходит от поиск в игровом дереве (Game Tree Search - это метод, применяемый в теории игр и искусственном интеллекте для анализа возможных ходов в игре), при котором вы просматриваете некоторое количество ходов вперед. Вы можете попытаться углубить дерево, рассматривая больше ходов вперед. Когда ваш ответ перестает изменяться или улучшаться значительно, можно считать, что у вас уже есть довольно хороший ответ, и дальнейшее углубление не даст существенных улучшений. В IDA* "глубина" - это пороговое значение $`f(v)`$. Когда значение $`f(v)`$ слишком велико, узел даже не рассматривается (то есть его не добавляют в множество "opened"). Первый проход обрабатывает очень небольшое количество узлов. На каждом последующем проходе увеличивается количество посещаемых узлов. Если вы обнаружите, что путь улучшается, вы продолжаете увеличивать отсечение. 
+Название происходит от поиска в игровом дереве (Game Tree Search - это метод, применяемый в теории игр и искусственном интеллекте для анализа возможных ходов в игре), при котором вы просматриваете некоторое количество ходов вперед. Вы можете попытаться углубить дерево, рассматривая больше ходов вперед. Когда ваш ответ перестает изменяться или улучшаться значительно, можно считать, что у вас уже есть довольно хороший ответ, и дальнейшее углубление не даст существенных улучшений. В IDA* "глубина" - это пороговое значение $`f(v)`$. Когда значение $`f(v)`$ слишком велико, узел даже не рассматривается (то есть его не добавляют в множество "opened"). Первый проход обрабатывает очень небольшое количество узлов. На каждом последующем проходе увеличивается количество посещаемых узлов. Если вы обнаружите, что путь улучшается, вы продолжаете увеличивать отсечение. 
 
 ### Weighted A* (Взвешенный A*)
 При использовании Weighted A* для оценки общей стоимости пути от начальной вершины до цели умножается эвристическая оценка на некоторый коэффициент веса $`w`$ (обычно это положительное число): $`f(v)=g(v)+w*h(v)`$. Это позволяет увеличивать или уменьшать влияние эвристической функции на выбор следующего узла для раскрытия. 
